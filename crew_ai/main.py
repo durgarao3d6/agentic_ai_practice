@@ -1,11 +1,13 @@
 from fastapi import FastAPI
 from src.api import router as api_router
 from src.flow_api import router as flow_router
+from src.qa_api import router as qa_router
 
 app = FastAPI()
 
 app.include_router(api_router, prefix="/crew")
 app.include_router(flow_router, prefix="/flow")
+app.include_router(qa_router, prefix="/qa")
 
 if __name__ == "__main__":
     import uvicorn

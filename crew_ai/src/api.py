@@ -1,18 +1,36 @@
-from fastapi import FastAPI, HTTPException, APIRouter
+import json
+from fastapi import APIRouter, Body
 from pydantic import BaseModel
-from src.crew_setup import ResearchCrew  # Import your CrewSetup class
+
+# Import your function
+from src.crews.qa_crew import generate_qa  
 
 router = APIRouter()
 
-class ResearchRequest(BaseModel):
-    topic: str = "AI trends"  # Default topic
+# Define response model
+class QAResponse(BaseModel):
+    success: bool
+    data: dict | None = None  # Ensure it's a dict, not a string
+    error: str | None = None
 
-@router.post("/run-research")
-async def run_research(request: ResearchRequest):
-    """API endpoint to trigger research"""
+# Request model
+class QAGenerateRequest(BaseModel):
+    topic: str
+    num_questions: int = 5
+
+@router.post("/generate-qa", response_model=QAResponse)
+async def generate_qa_endpoint(request: QAGenerateRequest = Body(...)):
     try:
-        crew_instance = ResearchCrew(request.topic)
-        result = crew_instance.crew().kickoff()
-        return {"topic": request.topic, "summary": result}
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+        result = generate_qa(request.topic, request.num_questions)
+
+        # Ensure 'result' is a dictionary, not a string
+        if isinstance(result, str):
+            try:
+                result = json.loads(result)  # Convert JSON string to dictionary
+            except json.JSONDecodeError:
+                raise ValueError("Invalid JSON format returned from generate_qa")
+
+        return QAResponse(success=True, data=result)
+    
+    except ValueError as e:
+        return QAResponse(success=False, error=str(e))

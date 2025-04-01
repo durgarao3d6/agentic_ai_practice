@@ -2,8 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Container, Typography, CircularProgress } from "@mui/material";
 import { fetchGuideContent } from "../services/guideService";
-import ReactMarkdown from "react-markdown";
-import remarkGfm from "remark-gfm";
+import MarkdownRenderer from "./MarkdownEditor";
 
 interface GuideContent {
   task_id: string;
@@ -38,7 +37,7 @@ const GuideDetails: React.FC = () => {
       <Typography variant="h4">{guide.task_id}</Typography>
       <Typography variant="body1" sx={{ whiteSpace: "pre-wrap" }}>
         
-        <ReactMarkdown remarkPlugins={[remarkGfm]}>{guide.content}</ReactMarkdown>
+        <MarkdownRenderer content={guide.content} />
       </Typography>
     </Container>
   );

@@ -10,14 +10,16 @@ class ContentCrew():
     def content_writer(self) -> Agent:
         return Agent(
             config=self.agents_config['content_writer'],
-            verbose=True
+            verbose=True,
+            max_iter=3,
         )
 
     @agent
     def content_reviewer(self) -> Agent:
         return Agent(
             config=self.agents_config['content_reviewer'],
-            verbose=True
+            verbose=True,
+            max_iter=3,
         )
 
     @task
@@ -41,4 +43,5 @@ class ContentCrew():
             tasks=self.tasks,
             process=Process.sequential,
             verbose=True,
+            max_iter=3,
         )

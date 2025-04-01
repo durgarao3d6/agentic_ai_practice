@@ -7,6 +7,7 @@ import {
   List,
   ListItem,
   ListItemText,
+  Button,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
@@ -28,17 +29,33 @@ const GuideList: React.FC = () => {
     navigate(`/guides/${taskId}`);
   };
 
-
   return (
     <Container>
-      <Typography variant="h4" gutterBottom>
-        Guide List
-      </Typography>
+      <Container
+        sx={{
+          marginTop: 4,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+        }}
+      >
+        <Typography variant="h4" gutterBottom>
+          Guide List
+        </Typography>
+        <Button
+          variant="contained"
+          color="primary"
+          sx={{ marginBottom: 2 }}
+          title="Create New Guide"
+          onClick={() => navigate("/guides/create")}
+        >
+          Create New Guide
+        </Button>
+      </Container>
       {loading ? (
         <CircularProgress />
       ) : (
         <Container sx={{ marginTop: 4 }}>
-          <Typography variant="h4">Guide List</Typography>
           <List>
             {guides.map((guide) => (
               <ListItem
@@ -49,8 +66,12 @@ const GuideList: React.FC = () => {
                   textAlign: "left",
                   width: "100%",
                   cursor: "pointer",
-                  border: "none",
-                  background: "none",
+                  border: "1px solid #ccc",
+                  borderRadius: 1,
+                  backgroundColor: "rgba(0, 0, 0, 0.05)",
+                  // background: "none",
+                  marginBottom: 1,
+                  padding: 1,
                 }}
               >
                 <ListItemText primary={guide.title || "Untitled Guide"} />

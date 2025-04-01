@@ -6,6 +6,7 @@ import Appbar from "./components/Appbar";
 import GuideList from "./components/GuideList";
 import GuideDetails from "./components/GuideDetails";
 import CreateGuide from "./pages/CreateGuide";
+import './App.css'; // Import your CSS file for global styles
 
 const drawerWidth = 240; // Sidebar width
 const appBarHeight = 64; // Adjust based on Appbar height

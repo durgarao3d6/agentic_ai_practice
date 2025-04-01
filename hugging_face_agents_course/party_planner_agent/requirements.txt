@@ -1,0 +1,7 @@
+# requirements.txt
+smolagents>=0.1.0
+huggingface-hub
+opentelemetry-sdk
+opentelemetry-exporter-otlp
+openinference-instrumentation-smolagents
+numpy
